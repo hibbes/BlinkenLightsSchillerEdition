@@ -1,6 +1,6 @@
 # BlinkenLightsSchillerEdition
 
-Schulprojekt der **Friedrich-Schiller-Schule**: Eine interaktive 3×3-LED-Matrix, gesteuert
+Schulprojekt des **Schiller-Gymnasiums Offenburg**: Eine interaktive 3×3-LED-Matrix, gesteuert
 von einem Processing-Server (PC) über UDP-WiFi an NodeMCU-Clients (ESP8266).
 
 > Basiert auf dem [BlinkenLights-Projekt](https://github.com/original/BlinkenLights).
