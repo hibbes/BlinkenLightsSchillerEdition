@@ -1,25 +1,71 @@
 # BlinkenLightsSchillerEdition
-BlinkenLight Project with NodeMCU as a Client and Server written in Processing
 
-#goal#
-The goal of the project is to control several lights to use them like a huge Screen on a house front. 
-The Project is inspired by the BlinkenLichten Project: http://blinkenlights.net/blinkenlights
+Schulprojekt der **Friedrich-Schiller-Schule**: Eine interaktive 3×3-LED-Matrix, gesteuert
+von einem Processing-Server (PC) über UDP-WiFi an NodeMCU-Clients (ESP8266).
 
+> Basiert auf dem [BlinkenLights-Projekt](https://github.com/original/BlinkenLights).
+> Diese "Schiller Edition" wurde von Schülern des Informatikunterrichts erweitert.
 
-The infrastructure is divided in one server and several clients with connected (via IR) lights. 
+## Systemarchitektur
 
-#lights#
-Simple IR-conrollable lights were used. 
-The client is sending IR-signals with a connected IR-LED but the client doesn't know wether the color
-change was successful or not. But usually there are no problems.
+```
+PC (Processing-Server)          NodeMCU (ESP8266-Client)
+┌─────────────────────────┐     ┌─────────────────────────┐
+│ Blinkenlights_Server    │ UDP │  BlinkenLights/          │
+│ Processing.pde          │────▶│  src/main.cpp            │
+│                         │     │  WiFiConnection.cpp/.h   │
+│ 3×3 Farbmatrix-GUI      │     │                          │
+│ Animationen per Klick   │     │ Empfängt Farbbefehle,    │
+│                         │     │ steuert LED-Matrix       │
+└─────────────────────────┘     └─────────────────────────┘
+```
 
-#clients#
-A NodeMCU v0.1 is acting as a client. The source code is in c++.
-The NodeMCU's are connecting theirselfes to WiFi-AP's and they get the colorchange notifications via udp.
+## Schüler-Animationen
 
-#server#
-The Server is running processing 5. It will be available as Android and PC application. 
-The Server knows the location of every single light/NodeMCU and connects directly to them.
-Information about which light displays which color is stored in an two dimensional array. 
-The NodeMCU doesn't know if the 
+Jeder Schüler hat eine eigene `.pde`-Datei mit einer selbst programmierten Animation:
 
+| Datei | Schüler |
+|-------|---------|
+| `Alexandra.pde` | Alexandra |
+| `Celina.pde` | Celina |
+| `Denis.pde` | Denis |
+| `Emanuel.pde` | Emanuel |
+| `Enrico.pde` | Enrico |
+| `Jannick.pde` | Jannick |
+| `Julius.pde` | Julius |
+| `Lars.pde` | Lars |
+| `Maja.pde` | Maja |
+| `Marek.pde` | Marek (Lehrer) |
+| `Marvin.pde` | Marvin |
+| `Miko.pde` | Miko |
+| `Raoul.pde` | Raoul |
+| `Sven.pde` | Sven |
+
+## Technische Komponenten
+
+### Server (Processing)
+- `Blinkenlights_ServerProcessing.pde` – Hauptprogramm: GUI, UDP-Sender, Animation-Dispatcher
+- `LightMatrix.pde` – Datenmodell: 3×3 Matrix von `Light`-Objekten
+- `Light.pde` – Einzelne LED: IP-Adresse, Farbe, UDP-Senden
+- `Color.pde` – Farbdefinitionen (16 vordefinierte + off/on)
+- `Animation.pde` – Basisklasse für alle Schüler-Animationen
+- `GUI.pde` – Benutzeroberfläche (ControlP5-Bibliothek)
+
+### Client (NodeMCU / C++)
+- `src/main.cpp` – Empfängt UDP-Pakete, steuert LEDs
+- `src/WiFiConnection.cpp/.h` – WiFi-Verbindungsmanagement
+- `src/config.h` – Netzwerkkonfiguration (SSID, Passwort, IP)
+
+## Lernziele (Unterricht)
+
+- **Netzwerkprogrammierung**: UDP-Sockets in Processing
+- **IoT / Hardware**: NodeMCU programmieren, LEDs steuern
+- **Objektorientierung**: `Animation`-Basisklasse, Vererbung in Processing (Java-ähnlich)
+- **Kreatives Programmieren**: Jeder Schüler entwirft eine eigene Lichtanimation
+
+## Verwendete Bibliotheken
+
+- [Processing](https://processing.org/) (Server)
+- [ControlP5](http://www.sojamo.de/libraries/controlP5/) (GUI)
+- [UDP für Processing](http://ubaa.net/shared/processing/udp/)
+- [PlatformIO](https://platformio.org/) (NodeMCU-Firmware)
