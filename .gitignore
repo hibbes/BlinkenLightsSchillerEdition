@@ -1,0 +1,10 @@
+# Processing / Arduino
+*.pde~
+applet/
+
+# Android
+local.properties
+
+# OS
+.DS_Store
+Thumbs.db
